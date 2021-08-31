@@ -18,6 +18,19 @@ const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.set("view engine", "ejs");
+const urlDatabase = {
+  "b2xVn2": "http://www.lighthouselabs.ca",
+  "9sm5xK": "http://www.google.com"
+};
+
+app.post("/urls/:id", (req, res) => {
+ 
+  console.log(req.params, "edit");
+  res.redirect("/urls");
+});
+
+
 app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
   console.log(req.params.shortURL);
@@ -29,12 +42,12 @@ app.post("/urls", (req, res) => {
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
 
-app.set("view engine", "ejs");
-const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
 
+app.get("/urls/:id", (req, res) => {
+ const lu = urlDatabase[req.params.id];
+  const templateVars = { shortURL: req.params.id, longURL: lu};
+  res.render("urls_show", templateVars);
+});
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
