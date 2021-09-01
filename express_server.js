@@ -30,6 +30,17 @@ app.post("/urls/:id", (req, res) => {
   res.redirect("/urls");
 });
 
+app.post("/login", (req,res) => {
+  const input = req.body["username"];
+  console.log(req.body);
+  //console.log(req.cookies);
+  res.cookie("username", input);
+  
+  console.log("Cookies :: " + req.cookies);
+  res.send(`Username: ${input}`);
+  //res.cookie('username',input, { maxAge: 900000, httpOnly: true });
+  //res.redirect("/urls");
+});
 
 app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
@@ -38,6 +49,9 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
+  const templateVars = {
+    username: req.cookies["username"]};
+  console.log("Cookies in /urls :: " + req.cookies["username"]);
   console.log(req.body.longURL);  // Log the POST request body to the console
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
@@ -46,8 +60,11 @@ app.post("/urls", (req, res) => {
 app.get("/urls/:id", (req, res) => {
  const lu = urlDatabase[req.params.id];
   const templateVars = { shortURL: req.params.id, longURL: lu};
+  
   res.render("urls_show", templateVars);
 });
+
+
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
