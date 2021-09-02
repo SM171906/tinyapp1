@@ -1,3 +1,4 @@
+
 <header>
   
  
@@ -16,24 +17,23 @@
       
     </div>
     <div>
-    <% if(username) { %>
+    <% if(locals.user) { %>
       <form action="/logout" method="POST"> <br>
-      <h1> <%= username %> </h1>
+      
+      <h1> <%= user.email %> </h1>
+      
       <input type="submit" value="logout">
 
     </form>
       <% }  else { %><br>
-      
-        <form action="/login" method="POST">
-          <!-- user input-->
-           <br>
-          <input type="text" name="username" placeholder="Username" required><br><br>
-         
-          <input type="submit" value="login">
-        </form>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        
      <% } %>
     </div>
   </nav>
   
     
 </header>
+
+
