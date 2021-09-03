@@ -17,15 +17,16 @@
       
     </div>
     <div>
-    <% if(locals.user) { %>
+    <% if(user) { %>
       <form action="/logout" method="POST"> <br>
       
-      <h1> <%= user.email %> </h1>
+      <h5> <%= user.email %> </h5>
       
       <input type="submit" value="logout">
 
     </form>
       <% }  else { %><br>
+        
         <a href="/login">Login</a>
         <a href="/register">Register</a>
         
